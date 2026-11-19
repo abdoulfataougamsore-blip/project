@@ -1,0 +1,22 @@
+venv/
+FESPACO/venv
+.env
+.env.*
+!.env.example
+
+# Fichiers Python générés
+__pycache__/
+*.py[cod]
+
+# Fichiers générés par Django ou les tests
+staticfiles/
+media/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Journaux et fichiers système
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini
