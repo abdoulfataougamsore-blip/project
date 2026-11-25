@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Galerie multimédia - FESPACO</title>
+</head>
+<body>
+
+    <h1>Galerie multimédia du FESPACO</h1>
+
+    <form method="GET">
+        <input
+            type="text"
+            name="q"
+            placeholder="Rechercher un média..."
+            value="{{ request.GET.q }}"
+        >
+        <button type="submit">Rechercher</button>
+    </form>
+
+    <a href="{% url 'ajouter_media' %}">
+        Ajouter un média
+    </a>
+
+    <hr>
+
+    {% for media in medias %}
+
+        <h2>{{ media.titre }}</h2>
+
+        {% if media.type == 'image' %}
+
+            <img src="{{ media.fichier.url }}"
+                 alt="{{ media.titre }}"
+                 width="300">
+
+        {% elif media.type == 'video' %}
+
+            {% if media.fichier %}
+                <video width="400" controls>
+                    <source src="{{ media.fichier.url }}" type="video/mp4">
+                    Votre navigateur ne supporte pas la vidéo.
+                </video>
+            {% else %}
+                <a href="{{ media.lien_video }}">Voir la vidéo</a>
+            {% endif %}
+
+        {% endif %}
+
+        <p>{{ media.legende }}</p>
+
+        <small>Ajouté le : {{ media.date_ajout }}</small>
+
+        <p>
+            <a href="{% url 'modifier_media' media.id %}">
+                Modifier
+            </a>
+
+            <a href="{% url 'supprimer_media' media.id %}">
+                Supprimer
+            </a>
+        </p>
+
+        <hr>
+
+    {% empty %}
+
+        <p>Aucun média n'est encore disponible.</p>
+
+    {% endfor %}
+
+</body>
+</html>

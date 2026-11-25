@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Supprimer un média - FESPACO</title>
+</head>
+<body>
+
+    <h1>Confirmer la suppression</h1>
+
+    <p>
+        Voulez-vous vraiment supprimer le média
+        <strong>{{ media.titre }}</strong> ?
+    </p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Oui, supprimer</button>
+    </form>
+
+    <a href="{% url 'galerie' %}">Annuler</a>
+
+</body>
+</html>
