@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ titre_page|default:"Ajouter un média" }} - FESPACO</title>
+</head>
+
+<body>
+
+    <h1>{{ titre_page|default:"Ajouter un média à la galerie FESPACO" }}</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        {{ formulaire.as_p }}
+
+        <button type="submit">Enregistrer le média</button>
+
+    </form>
+
+</body>
+</html>
