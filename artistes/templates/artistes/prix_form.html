@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Attribuer un prix d'acteur</title>
+</head>
+<body>
+    <h1>Attribuer un prix d'acteur</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Valider le prix</button>
+        <a href="{% url 'artistes:liste' %}">Annuler</a>
+    </form>
+</body>
+</html>

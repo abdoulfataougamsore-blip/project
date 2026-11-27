@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if object %}Modifier {{ object }}{% else %}Ajouter un artiste{% endif %}</title>
+</head>
+<body>
+    <h1>{% if object %}Modifier {{ object }}{% else %}Ajouter un artiste{% endif %}</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enregistrer</button>
+        <a href="{% url 'artistes:liste' %}">Annuler</a>
+    </form>
+</body>
+</html>

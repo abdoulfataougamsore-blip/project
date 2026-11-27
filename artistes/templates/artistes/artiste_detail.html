@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ artiste }} — FESPACO</title>
+</head>
+<body>
+    <h1>{{ artiste }}</h1>
+
+    {% if artiste.photo %}
+        <img src="{{ artiste.photo.url }}" alt="{{ artiste }}" width="150">
+    {% endif %}
+
+    <p><strong>Sexe :</strong> {{ artiste.get_sexe_display }}</p>
+    <p><strong>Nationalité :</strong> {{ artiste.nationalite }}</p>
+    {% if artiste.date_naissance %}
+        <p><strong>Date de naissance :</strong> {{ artiste.date_naissance }}</p>
+    {% endif %}
+    <p>
+        <strong>Rôles :</strong>
+        {% if artiste.est_realisateur %}Réalisateur{% endif %}
+        {% if artiste.est_realisateur and artiste.est_acteur %} / {% endif %}
+        {% if artiste.est_acteur %}Acteur/Actrice{% endif %}
+    </p>
+
+    {% if artiste.biographie %}
+        <h2>Biographie</h2>
+        <p>{{ artiste.biographie }}</p>
+    {% endif %}
+
+    <h2>Palmarès</h2>
+    <ul>
+        {% for item in palmares %}
+            <li>
+                <strong>{{ item.titre_distinction }}</strong> — {{ item.edition }} ({{ item.annee }})
+                <br>
+                <em>Source :</em> {{ item.get_source_display }}
+                {% if item.film %}
+                    | <em>Film :</em> {{ item.film }}
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>Aucune distinction enregistrée dans le palmarès.</li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        <a href="{% url 'artistes:modifier' artiste.pk %}">Modifier</a> |
+        <a href="{% url 'artistes:supprimer' artiste.pk %}">Supprimer</a> |
+        <a href="{% url 'artistes:liste' %}">Retour à la liste</a>
+    </p>
+</body>
+</html>

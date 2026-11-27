@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Artistes — FESPACO</title>
+</head>
+<body>
+    <h1>Artistes — FESPACO</h1>
+
+    <form method="get">
+        <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Rechercher un artiste, pays, film...">
+        <select name="role">
+            <option value="">Tous les rôles</option>
+            <option value="realisateur" {% if request.GET.role == 'realisateur' %}selected{% endif %}>Réalisateurs</option>
+            <option value="acteur" {% if request.GET.role == 'acteur' %}selected{% endif %}>Acteurs / Actrices</option>
+        </select>
+        <button type="submit">Filtrer / Rechercher</button>
+        <a href="{% url 'artistes:liste' %}">Réinitialiser</a>
+    </form>
+
+    <p>
+        <a href="{% url 'artistes:ajouter' %}">+ Ajouter un artiste</a> |
+        <a href="{% url 'artistes:ajouter_prix' %}">+ Attribuer un prix d'acteur</a> |
+        <a href="{% url 'artistes:ajouter_palmares' %}">+ Ajouter au palmarès</a>
+    </p>
+
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Photo</th>
+                <th>Nom complet</th>
+                <th>Sexe</th>
+                <th>Nationalité</th>
+                <th>Rôles</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for artiste in artistes %}
+            <tr>
+                <td>
+                    {% if artiste.photo %}
+                        <img src="{{ artiste.photo.url }}" alt="{{ artiste }}" width="60">
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
+                <td><a href="{% url 'artistes:detail' artiste.pk %}">{{ artiste }}</a></td>
+                <td>{{ artiste.get_sexe_display }}</td>
+                <td>{{ artiste.nationalite }}</td>
+                <td>
+                    {% if artiste.est_realisateur %}Réalisateur{% endif %}
+                    {% if artiste.est_realisateur and artiste.est_acteur %}, {% endif %}
+                    {% if artiste.est_acteur %}Acteur/Actrice{% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'artistes:detail' artiste.pk %}">Voir</a> |
+                    <a href="{% url 'artistes:modifier' artiste.pk %}">Modifier</a> |
+                    <a href="{% url 'artistes:supprimer' artiste.pk %}">Supprimer</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">Aucun artiste trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
